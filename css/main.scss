@@ -1,17 +1,121 @@
 $colours: (
   primary: #005dff,
-  accent: #fff6bb
+  primary-light: lighten(#00fdff, 40%),
+  primary-dark: darken(#00fdff, 40%),
+  accent: #fff6bb,
+  header: white,
+  card-background: white
 );
+
+$paddings: (
+  header: 1rem,
+  card: 0.2rem 1rem 0 1rem,
+  button: 1rem
+);
+
+$margins: (
+  card: 1em auto
+);
+
+$borders: (
+  card: 15px,
+  card-radius: 15px
+);
+
+@function colour($colour-name) {
+  @return map-get($colours, $colour-name);
+}
+
+@function padding($padding-name) {
+  @return map-get($paddings, $padding-name);
+}
+
+@function margin($margin-name) {
+  @return map-get($margins, $margin-name);
+}
+
+@function border($border-name) {
+  @return map-get($borders, $border-name);
+}
 
 body {
   margin: 0;
   font-family: "Montserrat", sans-serif;
+
   .bg {
     width: 100%; // make it take up full html width
     height: 100%; // and height
     z-index: -1; // put behind everything
     position: absolute; // and take out of normal flow
-    background-color: map-get($colours, primary); // clip the display
+    background-color: colour(primary); // clip the display
     clip-path: polygon(100% 0, 100% 82%, 45% 100%, 0 100%, 0 0);
+  }
+
+  header a {
+    display: block; // padding will be applied top and bottom
+    color: colour(header);
+    padding: padding(header);
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 2rem;
+  }
+
+  main {
+    section.card {
+      background-color: colour(card-background);
+      padding: padding(card);
+      margin: margin(card);
+      border: border(card);
+      border-radius: border(card-radius);
+      width: 80%;
+
+      ul {
+        // margin: 0 auto;
+        padding-left: 0;
+        li {
+          list-style-type: none;
+          margin-bottom: 0.25rem;
+          min-height: 2.375rem;
+          position: relative;
+          top: -0.2rem; //fine tuning lol
+          left: 0.4rem;
+          span {
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            background-color: colour(primary-light);
+            border-radius: 50%;
+            margin-right: 0.75em;
+          }
+          strong {
+            display: inline-block;
+            margin-left: 3rem;
+            font-size: 0.9em;
+            position: relative;
+            top: 0.25rem;
+          }
+        }
+      }
+    }
+    section.primary {
+      color: white;
+      padding: padding(card);
+      text-align: center;
+      h1 {
+        font-size: 3rem;
+        text-transform: uppercase;
+      }
+      a {
+        color: colour(primary-dark);
+        border-radius: border(card);
+        text-decoration: none;
+        text-transform: uppercase;
+        background-color: colour(accent);
+        padding: padding(button);
+        margin: 2.5rem auto;
+        display: block;
+        font-weight: bold;
+      }
+    }
   }
 }
