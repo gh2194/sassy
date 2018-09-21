@@ -1,3 +1,13 @@
+$breakpoints: (
+  desktop: 840px
+);
+
+@mixin desktop {
+  @media (min-width: map-get($breakpoints,desktop)) {
+    @content;
+  }
+}
+
 $colours: (
   primary: #005dff,
   primary-light: lighten(#00fdff, 40%),
@@ -10,7 +20,8 @@ $colours: (
 $paddings: (
   header: 1rem,
   card: 0.2rem 1rem 0 1rem,
-  button: 1rem
+  button: 1rem,
+  button-desktop: 1rem 4rem
 );
 
 $margins: (
@@ -48,7 +59,11 @@ body {
     z-index: -1; // put behind everything
     position: absolute; // and take out of normal flow
     background-color: colour(primary); // clip the display
-    clip-path: polygon(100% 0, 100% 82%, 45% 100%, 0 100%, 0 0);
+    clip-path: polygon(100% 0, 100% 80%, 45% 100%, 0 100%, 0 0);
+
+    @include desktop {
+      clip-path: polygon(75% 0, 45% 100%, 0 100%, 0 0);
+    }
   }
 
   header a {
@@ -61,6 +76,12 @@ body {
   }
 
   main {
+    @include desktop {
+      display: grid;
+      grid-template-columns: 50% auto;
+      grid-template-areas: "primary card";
+    }
+
     section.card {
       background-color: colour(card-background);
       padding: padding(card);
@@ -68,16 +89,23 @@ body {
       border: border(card);
       border-radius: border(card-radius);
       width: 80%;
+      box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.4);
+
+      @include desktop {
+        grid-area: "card";
+        height: fit-content;
+        align-self: center;
+        margin-right: 4em;
+      }
 
       ul {
-        // margin: 0 auto;
         padding-left: 0;
         li {
           list-style-type: none;
           margin-bottom: 0.25rem;
           min-height: 2.375rem;
           position: relative;
-          top: -0.2rem; //fine tuning lol
+          top: -0.2rem;
           left: 0.4rem;
           span {
             width: 30px;
@@ -101,11 +129,24 @@ body {
       color: white;
       padding: padding(card);
       text-align: center;
+
+      @include desktop {
+        text-align: left;
+        grid-area: primary;
+        margin-top: 4em;
+        margin-left: 3em;
+      }
       h1 {
         font-size: 3rem;
         text-transform: uppercase;
+        @include desktop {
+          width: 30%;
+          font-size: 4rem;
+          line-height: 1em;
+        }
       }
       a {
+        text-align: center;
         color: colour(primary-dark);
         border-radius: border(card);
         text-decoration: none;
@@ -115,6 +156,11 @@ body {
         margin: 2.5rem auto;
         display: block;
         font-weight: bold;
+
+        @include desktop {
+          display: inline-block;
+          padding: padding(button-desktop);
+        }
       }
     }
   }
