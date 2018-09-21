@@ -1,0 +1,17 @@
+$colours: (
+  primary: #005dff,
+  accent: #fff6bb
+);
+
+body {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  .bg {
+    width: 100%; // make it take up full html width
+    height: 100%; // and height
+    z-index: -1; // put behind everything
+    position: absolute; // and take out of normal flow
+    background-color: map-get($colours, primary); // clip the display
+    clip-path: polygon(100% 0, 100% 82%, 45% 100%, 0 100%, 0 0);
+  }
+}
